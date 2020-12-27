@@ -149,6 +149,8 @@ ol.product-list > li + li {
 }
 
 button {
+  font-size: small;
+  outline-style: none;
   height: 40px;
   width: 80px;
   margin: 2px;
@@ -164,8 +166,8 @@ button {
   background-color: rgba(162, 237, 86, 0.8);
 }
 
-button:hover {
-  background-color: rgba(162, 237, 86, 0.2);
+.action-btns button:hover {
+  background-color: rgba(253, 220, 50, 0.8);
 }
 
 ol li:hover {

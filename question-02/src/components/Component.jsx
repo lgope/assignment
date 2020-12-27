@@ -12,30 +12,27 @@ const data = [
 export const Component = () => {
   const initialRenderData = data.slice(0, 3);
   const [renderData, setRenderData] = useState(initialRenderData);
+  
   const renderAllData = () => setRenderData(data);
   const collapseData = () => setRenderData(initialRenderData);
+
   return (
     <div className='component'>
       <div className='action-btns'>
-      {/* <div className='view-all'> */}
+        {/* view all button */}
         <button className='view-all-btn' type='button' onClick={renderAllData}>
           View All
         </button>
-      {/* </div> */}
 
-        <div className='collapse'>
-          {renderData.length > 4 && (
-            <button
-              className='collapse-btn'
-              type='button'
-              onClick={collapseData}
-            >
-              Collapse
-            </button>
-          )}
-        </div>
-        
+        {/* collapse button visible when render data is greater or equal to 4 */}
+        {renderData.length >= 4 && (
+          <button className='collapse-btn' type='button' onClick={collapseData}>
+            Collapse
+          </button>
+        )}
       </div>
+
+      {/* data list */}
       <ol className='product-list'>
         {renderData.map((el, index) => (
           <li key={index}>
