@@ -13,6 +13,8 @@ export const auth = (req, res, next) => {
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
+    console.log('de ', decoded);
+
     // Add user from payload
     req.user = decoded;
     next();
