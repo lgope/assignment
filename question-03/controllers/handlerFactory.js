@@ -3,10 +3,16 @@ import catchAsync from '../utils/catchAsync.js';
 
 export const deleteOne = Model =>
   catchAsync(async (req, res, next) => {
-    const doc = await Model.findByIdAndDelete(req.params.id);
+    const doc = await Model.findByIdAndUpdate(
+      req.params.id,
+      { isActive: 'false' },
+      { new: true }
+    );
+
     if (!doc) {
       return next(new AppError('No document found with that id', 404));
     }
+
     res.status(204).json({
       status: 'success',
       data: null,
@@ -31,6 +37,7 @@ export const updateOne = Model =>
 export const createOne = Model =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.create(req.body);
+
     res.status(201).json({
       status: 'success',
       doc,
@@ -39,10 +46,12 @@ export const createOne = Model =>
 
 export const getOne = Model =>
   catchAsync(async (req, res, next) => {
-    let doc = await Model.findById(req.params.id);
+    let doc = await Model.findOne(req.params.phone);
 
     if (!doc) {
-      return next(new AppError('No Document found with that id', 404));
+      return next(
+        new AppError('No Document found with that phone number!', 404)
+      );
     }
     res.status(200).json({
       status: 'success',
@@ -52,7 +61,7 @@ export const getOne = Model =>
 
 export const getAll = Model =>
   catchAsync(async (req, res, next) => {
-    const doc = await Model.find().sort({ createdAt: -1 });
+    const doc = await Model.find({ isActive: true }).sort({ createdAt: -1 });
 
     // SEND Response res
     res.status(200).json({
