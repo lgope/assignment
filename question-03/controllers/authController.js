@@ -105,41 +105,16 @@ export const login = catchAsync(async (req, res, next) => {
 });
 
 // LOGOUT
-export const logout = catchAsync((req, res, next) => {
-  let token = req.header('x-auth-token');
-
-  // Check for token
-  if (!token) return next(new AppError('No token, authorization denied', 401));
-
-  //   token = jwt.sign({ mobileNumber: req.user.mobileNumber, expiresIn: Math.floor(Date.now() + 10 * 1000) }, 'shhhhh');
-
-  //   token = jwt.sign({ mobileNumber: req.user.mobileNumber }, 'kjjkjkj', {
-  //     expiresIn: 2000,
-  //   });
-
-  console.log(token);
-
-  token = jwt.sign(
-    { mobileNumber: user.mobileNumber, role: user.role },
+export const logout = (req, res, next) => {
+  const token = jwt.sign(
+    { mobileNumber: '21212', role: '2121' },
     process.env.JWT_SECRET,
     { expiresIn: Math.floor(Date.now() / 1000) - 30 }
   );
-  // token = jwt.sign(
-  //   { mobileNumber: '234234234', iat: 4000, exp: 4000 },
-  //   process.env.JWT_SECRET
-  // );
 
-  // const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  // { mobileNumber: req.user.mobileNumber },
-  // process.env.JWT_SECRET,
-  // { expiresIn: Math.floor(Date.now() / 1000) - 30 })
-  //   req.user.iat = 2000;
-  //   req.user.exp = 2000;
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
   req.user = decoded;
-  console.log('user ', decoded);
-  //   console.log(Math.floor(Date.now() + 10 * 1000));
-  //   console.log('oldmn ', req.user.mobileNumber);
 
-  res.status(200).json({ status: 'success' });
-});
+  res.status(200).json({ status: 'success', message: 'Logged out!' });
+};

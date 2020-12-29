@@ -9,7 +9,6 @@ import * as authController from '../controllers/authController.js';
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
 
-// TODO: remove auth middleware and then test logout
 router.get('/logout', auth, authController.logout);
 
 export default router;

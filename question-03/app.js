@@ -1,7 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-import path from 'path';
 import compression from 'compression';
 import ejs from 'ejs';
 
@@ -33,10 +32,8 @@ app.use(compression());
 app.set('view engine', 'ejs');
 app.engine('ejs', ejs.__express);
 
-app.get('/', (req, res) => {
-  res.send('Hello World');
-});
-// auth Routes
+
+// Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/book', bookRoutes);

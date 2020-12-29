@@ -66,7 +66,7 @@ export const getOne = Model =>
       );
     }
 
-    // console.log('reu ', req.user);
+    // checking user is librarian or not
     if (doc.role === userRole.LIBRARIAN && req.user.role === userRole.STUDENT)
       return res.status(200).json({
         status: 'success',

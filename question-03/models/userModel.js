@@ -14,7 +14,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       validate: {
-        // This only works on CREATE and SAVE!!
+        /**
+         * This only works on CREATE and SAVE!!
+         * Checking bangladeshi number by regex
+         */
+
         validator: function (number) {
           const numRe = /^(?:\+88|88)?(01[3-9]\d{8})$/g;
           return numRe.test(number);
@@ -52,6 +56,7 @@ const userSchema = new mongoose.Schema(
     toJSON: {
       virtuals: true,
       transform: function (doc, ret) {
+        // excluding those fields from JSON results.
         delete ret.password;
         delete ret.__v;
         delete ret.id;
