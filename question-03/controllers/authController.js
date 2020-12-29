@@ -89,7 +89,7 @@ export const login = catchAsync(async (req, res, next) => {
 
   // We are sending the profile inside the token
   const token = jwt.sign(
-    { mobileNumber: user.mobileNumber },
+    { mobileNumber: user.mobileNumber, role: user.role },
     process.env.JWT_SECRET,
     { expiresIn: 3600 }
   );
@@ -105,7 +105,7 @@ export const login = catchAsync(async (req, res, next) => {
 });
 
 // LOGOUT
-export const logout = catchAsync(async (req, res, next) => {
+export const logout = catchAsync((req, res, next) => {
   let token = req.header('x-auth-token');
 
   // Check for token
@@ -117,20 +117,29 @@ export const logout = catchAsync(async (req, res, next) => {
   //     expiresIn: 2000,
   //   });
 
-  token = jwt.sign(
-    { mobileNumber: 'bar', iat: Math.floor(Date.now() / 1000) - 30 },
-    process.env.JWT_SECRET
-  );
+  console.log(token);
 
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  token = jwt.sign(
+    { mobileNumber: user.mobileNumber, role: user.role },
+    process.env.JWT_SECRET,
+    { expiresIn: Math.floor(Date.now() / 1000) - 30 }
+  );
+  // token = jwt.sign(
+  //   { mobileNumber: '234234234', iat: 4000, exp: 4000 },
+  //   process.env.JWT_SECRET
+  // );
+
+  // const decoded = jwt.verify(token, process.env.JWT_SECRET);
   // { mobileNumber: req.user.mobileNumber },
   // process.env.JWT_SECRET,
   // { expiresIn: Math.floor(Date.now() / 1000) - 30 })
   //   req.user.iat = 2000;
   //   req.user.exp = 2000;
+
+  req.user = decoded;
   console.log('user ', decoded);
   //   console.log(Math.floor(Date.now() + 10 * 1000));
-//   console.log('oldmn ', req.user.mobileNumber);
+  //   console.log('oldmn ', req.user.mobileNumber);
 
   res.status(200).json({ status: 'success' });
 });

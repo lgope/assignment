@@ -8,7 +8,7 @@ import ejs from 'ejs';
 import globalErrorHandler from './controllers/errorController.js';
 import AppError from './utils/appError.js';
 import authRoutes from './routes/authRoutes.js';
-// import userRoutes from './routes/userRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 import bookRoutes from './routes/bookRoutes.js';
 
 const app = express();
@@ -38,7 +38,7 @@ app.get('/', (req, res) => {
 });
 // auth Routes
 app.use('/api/auth', authRoutes);
-// app.use('/api/user', userRoutes);
+app.use('/api/user', userRoutes);
 app.use('/api/book', bookRoutes);
 
 app.all('*', (req, res, next) => {

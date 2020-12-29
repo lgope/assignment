@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-import User from '../models/userModel.js';
 
 import AppError from '../utils/appError.js';
 
@@ -13,8 +12,6 @@ export const auth = (req, res, next) => {
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    console.log('de ', decoded);
-
     // Add user from payload
     req.user = decoded;
     next();
@@ -24,30 +21,15 @@ export const auth = (req, res, next) => {
   }
 };
 
-export const ensureAdmin = async (req, res, next) => {
-  try {
-    const user = await User.findOne({ _id: req.user.id });
-
-    if (user.role === 'user') {
-      return next(new AppError('You are not allowed!', 401));
+export const accessTo = (...roles) => {
+  return (req, res, next) => {
+    // roles ['admin', 'lead-guide']. role='user'
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new AppError('You do not have permission to perform this action.', 403)
+      );
     }
 
     next();
-  } catch (error) {
-    return next(new AppError('Someting went wrong!', 400));
-  }
-};
-
-export const ensureUser = async (req, res, next) => {
-  try {
-    const user = await User.findOne({ _id: req.user.id });
-
-    if (user.role === 'admin') {
-      return next(new AppError('You are not allowed!', 401));
-    }
-
-    next();
-  } catch (error) {
-    return next(new AppError('Someting went wrong!', 400));
-  }
+  };
 };

@@ -6,8 +6,8 @@ import app from './app.js';
 
 // Connect to Mongo // &ssl=true
 mongoose
-    .connect(process.env.DATABASE_URI, {
-  // .connect('mongodb://localhost/library', {
+  .connect(process.env.DATABASE_URI, {
+    // .connect('mongodb://localhost/library', {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useCreateIndex: true,
