@@ -32,7 +32,6 @@ app.use(compression());
 app.set('view engine', 'ejs');
 app.engine('ejs', ejs.__express);
 
-
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);

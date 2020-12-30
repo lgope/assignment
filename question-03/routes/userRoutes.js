@@ -10,6 +10,9 @@ import * as userController from '../controllers/userController.js';
 // utils
 import * as userRole from '../utils/userRole.js';
 
+// all routers are protected
+router.use(auth);
+
 /**
  * @route GET api/user/
  * @desc Get user information
@@ -17,11 +20,7 @@ import * as userRole from '../utils/userRole.js';
  */
 router
   .route('/student/:phone')
-  .get(
-    auth,
-    accessTo(userRole.LIBRARIAN, userRole.STUDENT),
-    userController.getUser
-  );
+  .get(accessTo(userRole.LIBRARIAN, userRole.STUDENT), userController.getUser);
 
 /**
  * @route GET api/user/
@@ -30,7 +29,7 @@ router
  */
 router
   .route('/librarian/:phone')
-  .get(auth, accessTo(userRole.LIBRARIAN), userController.getUser);
+  .get(accessTo(userRole.LIBRARIAN), userController.getUser);
 
 /**
  * @route PATCH, DELETE api/user/
@@ -40,7 +39,7 @@ router
  */
 router
   .route('/:id')
-  .patch(auth, userController.updateUser)
-  .delete(auth, userController.deleteUser);
+  .patch(userController.updateUser)
+  .delete(userController.deleteUser);
 
 export default router;

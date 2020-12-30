@@ -10,6 +10,8 @@ import * as userRole from '../utils/userRole.js';
 // controller
 import * as bookController from '../controllers/bookController.js';
 
+// all routers are protected
+router.use(auth);
 /**
  * @route POST, GET  api/book/
  * @desc Post and Get book information
@@ -18,9 +20,8 @@ import * as bookController from '../controllers/bookController.js';
 
 router
   .route('/')
-  .post(auth, accessTo(userRole.LIBRARIAN), bookController.createBook)
+  .post(accessTo(userRole.LIBRARIAN), bookController.createBook)
   .get(
-    auth,
     accessTo(userRole.STUDENT, userRole.LIBRARIAN),
     bookController.getAllBooks
   );
@@ -32,11 +33,7 @@ router
  */
 router
   .route('/search/:searchTex')
-  .get(
-    auth,
-    accessTo(userRole.STUDENT, userRole.LIBRARIAN),
-    bookController.getBook
-  );
+  .get(accessTo(userRole.STUDENT, userRole.LIBRARIAN), bookController.getBook);
 
 /**
  * @route PATCH, DELETE api/book/
@@ -47,7 +44,7 @@ router
 
 router
   .route('/:id')
-  .patch(auth, accessTo(userRole.LIBRARIAN), bookController.updateBook)
-  .delete(auth, accessTo(userRole.LIBRARIAN), bookController.deleteBook);
+  .patch(accessTo(userRole.LIBRARIAN), bookController.updateBook)
+  .delete(accessTo(userRole.LIBRARIAN), bookController.deleteBook);
 
 export default router;
