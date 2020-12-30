@@ -32,11 +32,11 @@ Postman doc 👉 https://documenter.getpostman.com/view/8893042/TVt17ioz
 
 ### User Routes
 
-> http://localhost:8000/api/user/student/:phone (get)(access student & librarian)
+> http://localhost:8000/api/user/student/:phone (get) (get students information by mobile number) (access student & librarian)
 
-> http://localhost:8000/api/user/librarian/:phone (get) (access librarian)
+> http://localhost:8000/api/user/librarian/:phone (get) (get librarians information by mobile number) (access librarian)
 
-> http://localhost:8000/api/user/:id (post) (user update) (access student & librarian)
+> http://localhost:8000/api/user/:id (post) (user update) (access logged user)
 
 > http://localhost:8000/api/user/:id (delete) (user soft delete) (access logged user)
 
