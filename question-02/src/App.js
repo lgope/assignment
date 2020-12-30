@@ -1,4 +1,6 @@
 import './App.css';
+
+// components
 import { Component } from './components/Component.jsx';
 
 const App = () => (

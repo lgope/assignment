@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Products from './Products';
 
 const data = [
   { name: 'Product A', price: 300 },
@@ -12,7 +13,7 @@ const data = [
 export const Component = () => {
   const initialRenderData = data.slice(0, 3);
   const [renderData, setRenderData] = useState(initialRenderData);
-  
+
   const renderAllData = () => setRenderData(data);
   const collapseData = () => setRenderData(initialRenderData);
 
@@ -25,23 +26,20 @@ export const Component = () => {
         </button>
 
         {/* collapse button visible when render data is greater or equal to 4 */}
-        {renderData.length >= 4 && (
-          <button className='collapse-btn' type='button' onClick={collapseData}>
-            Collapse
-          </button>
-        )}
+        <button
+          className='collapse-btn'
+          type='button'
+          style={{ display: renderData.length >= 4 ? 'block' : 'none' }}
+          onClick={collapseData}
+        >
+          Collapse
+        </button>
       </div>
 
       {/* data list */}
-      <ol className='product-list'>
-        {renderData.map((el, index) => (
-          <li key={index}>
-            <strong className='product-name'>Name : </strong>
-            {el.name}
-            <strong className='product-price'>Price : </strong> {el.price}
-          </li>
-        ))}
-      </ol>
+      <div className='Products'>
+        <Products products={renderData} />
+      </div>
     </div>
   );
 };
